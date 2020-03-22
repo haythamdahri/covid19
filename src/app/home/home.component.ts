@@ -5,7 +5,7 @@ import {Subscription} from 'rxjs';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {Title} from '@angular/platform-browser';
-import { getCode, getName } from 'country-list';
+import {getName, getCodes} from 'country-list';
 
 @Component({
   selector: 'app-home',
@@ -15,10 +15,10 @@ import { getCode, getName } from 'country-list';
 export class HomeComponent implements OnInit, OnDestroy {
 
 
-  displayedColumns: string[] = ['cases', 'todayCases', 'deaths', 'todayDeaths', 'recovered', 'active', 'critical', 'timestamp'];
-  data: Statistics[] = [];
-  dataSource;
+  displayedColumns: string[] = ['code', 'name'];
+  data: Array<any> = new Array<any>();
   private statisticsSubscription: Subscription;
+  dataSource;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -27,19 +27,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Set component title
-    this.titleService.setTitle(`COVID19 - ${getName('MA')}`);
-    // Retrieve data from service
-    this.statisticsSubscription = this.statisticsService.getData().subscribe(
-      (data) => {
-        this.data = data.snapshots.reverse();
-        this.dataSource = new MatTableDataSource<Statistics>(this.data);
-        // Paginator
-        this.dataSource.paginator = this.paginator;
-      },
-      (error) => {
-        alert(error);
-      }
-    );
+    this.titleService.setTitle(`Home - Countries`);
+    // Retrieve countries list
+    getCodes().forEach(code => {
+      this.data = [...this.data, {code: code, name: getName(code)}];
+    });
+    this.dataSource = new MatTableDataSource<{ code: string, name: string }>(this.data);
+    // Paginator
+    this.dataSource.paginator = this.paginator;
   }
 
 

@@ -9,7 +9,7 @@ import {throwError} from 'rxjs';
 })
 export class StatisticsService {
 
-  private static API = 'http://covid19.soficoop.com/country/ma';
+  private static API = 'http://covid19.soficoop.com/country';
 
   constructor(private http: HttpClient) {
   }
@@ -18,8 +18,8 @@ export class StatisticsService {
    * Get covid data from API
    * Http Interceptor will perform error in case of unsuccessful operation
    */
-  getData(): any {
-    return this.http.get<Array<any>>(StatisticsService.API);
+  getData(countryCode): any {
+    return this.http.get<Array<any>>(`${StatisticsService.API}/${countryCode}`);
   }
 
 }
