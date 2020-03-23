@@ -8,20 +8,21 @@ import {Title} from '@angular/platform-browser';
 import {getCode, getName} from 'country-list';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatSort, Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-country-details',
   templateUrl: './country-details.component.html',
-  styleUrls: ['./country-details.component.css']
+  styleUrls: ['./country-details.component.css'],
 })
 export class CountryDetailsComponent implements OnInit, OnDestroy {
 
 
   displayedColumns: string[] = ['cases', 'todayCases', 'deaths', 'todayDeaths', 'recovered', 'active', 'critical', 'timestamp'];
-  data: StatisticsModel[] = [];
-  dataSource;
+  dataSource: MatTableDataSource<StatisticsModel>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   statisticsSubscription: Subscription;
   routeSubsription: Subscription;
@@ -44,11 +45,13 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
           (data) => {
             // Check if data is not null
             if (data !== null && data !== 'null') {
+              console.log(data);
               this.titleService.setTitle(`COVID19 - ${getName(countryCode)}`);
-              this.data = data.snapshots.reverse();
-              this.dataSource = new MatTableDataSource<StatisticsModel>(this.data);
+              this.dataSource = new MatTableDataSource<StatisticsModel>(data.snapshots.reverse());
               // Paginator
               this.dataSource.paginator = this.paginator;
+              // Sort
+              this.dataSource.sort = this.sort;
             } else {
               this.isError = true;
               this.snackBar.open('No country found', 'Undo', {
@@ -84,7 +87,8 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
 
   applyFilter($event: KeyboardEvent) {
     const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
 }
+

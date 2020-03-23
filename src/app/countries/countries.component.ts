@@ -8,6 +8,7 @@ import {Title} from '@angular/platform-browser';
 import {getName, getCodes} from 'country-list';
 import {CountriesService} from '../shared/countries.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,7 @@ export class CountriesComponent implements OnInit, OnDestroy {
   dataSource;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   private countriesSubscription: Subscription;
   isLoading = true;
@@ -41,6 +43,8 @@ export class CountriesComponent implements OnInit, OnDestroy {
         this.dataSource = new MatTableDataSource<any>(this.data);
         // Paginator
         this.dataSource.paginator = this.paginator;
+        // Sort
+        this.dataSource.sort = this.sort;
       },
       (error) => {
         this.snackBar.open('An error occurred', 'Undo', {

@@ -21,6 +21,7 @@ import { HomeComponent } from './home/home.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
+import {MatSortModule} from '@angular/material/sort';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import {MatListModule} from '@angular/material/list';
     MatCardModule,
     MatIconModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

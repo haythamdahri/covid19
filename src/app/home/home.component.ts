@@ -16,7 +16,7 @@ import CountryDataModel from '../models/country-data.model';
 export class HomeComponent implements OnInit, OnDestroy {
 
 // MatPaginator Inputs
-  pagedList: CountryDataModel[]= [];
+  pagedList: CountryDataModel[] = [];
   breakpoint: number = 3;  //to adjust to screen
   // MatPaginator Inputs
   length: number = 0;
@@ -68,13 +68,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   applyFilter($event: KeyboardEvent) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.pagedList = this.countriesList.filter(countryData => countryData.country.toLocaleLowerCase().indexOf(filterValue.toLowerCase()) !== -1).slice(0, 3);
+    this.pagedList = this.countriesList.filter(countryData =>
+      countryData.country.toLocaleLowerCase().indexOf(filterValue.toLowerCase()) !== -1).slice(0, 3);
   }
 
-  onPageChange(event: PageEvent){
+  onPageChange(event: PageEvent) {
     const startIndex = event.pageIndex * event.pageSize;
     let endIndex = startIndex + event.pageSize;
-    if(endIndex > this.length){
+    if (endIndex > this.length) {
       endIndex = this.length;
     }
     this.pagedList = this.countriesList.slice(startIndex, endIndex);
