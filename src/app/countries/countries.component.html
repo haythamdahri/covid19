@@ -46,8 +46,8 @@
         <th mat-header-cell *matHeaderCellDef> Flag</th>
         <td mat-cell *matCellDef="let element">
           <picture>
-            <source media='(min-width:0px)' [srcset]="element.flag">
-            <img mat-card-image height="20" width="30" src="" alt="{{element.name}}" />
+            <source media='(min-width:0px)' [srcset]="element.flag" />
+            <img height="20" width="30" src="" alt="{{element.name}}" />
           </picture>
       </ng-container>
 

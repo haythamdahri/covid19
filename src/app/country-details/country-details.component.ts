@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {StatisticsService} from '../shared/statistics.service';
-import Statistics from '../models/statistics.model';
+import StatisticsModel from '../models/statistics.model';
 import {Subscription} from 'rxjs';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -18,7 +18,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
 
 
   displayedColumns: string[] = ['cases', 'todayCases', 'deaths', 'todayDeaths', 'recovered', 'active', 'critical', 'timestamp'];
-  data: Statistics[] = [];
+  data: StatisticsModel[] = [];
   dataSource;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -46,7 +46,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
             if (data !== null && data !== 'null') {
               this.titleService.setTitle(`COVID19 - ${getName(countryCode)}`);
               this.data = data.snapshots.reverse();
-              this.dataSource = new MatTableDataSource<Statistics>(this.data);
+              this.dataSource = new MatTableDataSource<StatisticsModel>(this.data);
               // Paginator
               this.dataSource.paginator = this.paginator;
             } else {

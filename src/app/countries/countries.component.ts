@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {StatisticsService} from '../shared/statistics.service';
-import Statistics from '../models/statistics.model';
+import StatisticsModel from '../models/statistics.model';
 import {Subscription} from 'rxjs';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -33,11 +33,10 @@ export class CountriesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Set component title
-    this.titleService.setTitle(`Home - Countries`);
+    this.titleService.setTitle(`COVID19 - Countries`);
     // Retrieve countries list
     this.countriesSubscription = this.countriesService.getCountries().subscribe(
       (data) => {
-        console.log(data);
         this.data = data;
         this.dataSource = new MatTableDataSource<any>(this.data);
         // Paginator
@@ -55,7 +54,6 @@ export class CountriesComponent implements OnInit, OnDestroy {
       }
     );
   }
-
 
   ngOnDestroy(): void {
     // Desroy subscription
