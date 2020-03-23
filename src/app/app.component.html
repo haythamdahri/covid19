@@ -1,7 +1,28 @@
-<!-- Toolbar -->
-<mat-toolbar color="primary"><a routerLink="/">
-  <button mat-raised-button color="primary">COVID-19</button>
-</a></mat-toolbar>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-icon-button>
+      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+    </button>
+    <h1>COVID19 Dashboard</h1>
+    <span class="menu-spacer"></span>
+    <div>
+      <a mat-button [routerLink]="'/'"> <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon> Home</a>
+      <a mat-button [routerLink]="'/countries'"> <mat-icon aria-hidden="false" aria-label="Example home icon">list</mat-icon> Countries</a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
 
-<!-- Other components -->
-<router-outlet></router-outlet>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav>
+    <mat-nav-list>
+      <a mat-list-item (click)="sidenav.toggle()" [routerLink]="'/'"> <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon> Home</a>
+      <a mat-list-item (click)="sidenav.toggle()" [routerLink]="'/countries'"> <mat-icon aria-hidden="false" aria-label="Example home icon">list</mat-icon> Countries</a>
+      <a mat-list-item (click)="sidenav.toggle()" mat-list-item> <mat-icon aria-hidden="false" aria-label="Example home icon">close</mat-icon> Close</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="height: 88vh;">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

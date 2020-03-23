@@ -20,12 +20,13 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['cases', 'todayCases', 'deaths', 'todayDeaths', 'recovered', 'active', 'critical', 'timestamp'];
   data: Statistics[] = [];
   dataSource;
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
   statisticsSubscription: Subscription;
   routeSubsription: Subscription;
   isLoading = true;
   isError = false;
-
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private statisticsService: StatisticsService, private route: ActivatedRoute, private titleService: Title,
               private snackBar: MatSnackBar) {
@@ -48,7 +49,6 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
               this.dataSource = new MatTableDataSource<Statistics>(this.data);
               // Paginator
               this.dataSource.paginator = this.paginator;
-              console.log(this.paginator)
             } else {
               this.isError = true;
               this.snackBar.open('No country found', 'Undo', {
@@ -58,7 +58,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
           },
           (error) => {
             this.snackBar.open('No country found', 'Undo', {
-              duration: 6000,
+              duration: 2000,
             });
             this.isError = true;
           },

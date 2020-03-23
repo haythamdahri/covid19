@@ -18,7 +18,7 @@ export class StatisticsService {
    * Get covid data from API
    * Http Interceptor will perform error in case of unsuccessful operation
    */
-  getData(countryCode): any {
+  getData(countryCode: string): any {
     return this.http.get<Array<any>>(`${StatisticsService.API}/${countryCode}`);
   }
 
