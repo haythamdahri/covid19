@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {AboutAuthorComponent} from './about-author/about-author.component';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +9,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'covid19-dashboard';
-  sidenav: any;
+
+  constructor(private bottomSheet: MatBottomSheet) {}
+
+  openBottomSheet(): void {
+    this.bottomSheet.open(AboutAuthorComponent);
+  }
 }

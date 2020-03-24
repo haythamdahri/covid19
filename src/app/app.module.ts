@@ -23,9 +23,11 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatSortModule} from '@angular/material/sort';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 
 import { ChartsModule } from 'ng2-charts';
 import {DatePipe} from '@angular/common';
+import { AboutAuthorComponent } from './about-author/about-author.component';
 
 
 @NgModule({
@@ -33,7 +35,8 @@ import {DatePipe} from '@angular/common';
     AppComponent,
     CountriesComponent,
     CountryDetailsComponent,
-    HomeComponent
+    HomeComponent,
+    AboutAuthorComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +58,7 @@ import {DatePipe} from '@angular/common';
     MatListModule,
     MatSortModule,
     MatDividerModule,
+    MatBottomSheetModule,
     ChartsModule
   ],
   providers: [DatePipe],
