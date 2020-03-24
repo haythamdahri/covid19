@@ -22,6 +22,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatSortModule} from '@angular/material/sort';
+import {MatDividerModule} from '@angular/material/divider';
+
+import { ChartsModule } from 'ng2-charts';
+import {DatePipe} from '@angular/common';
 
 
 @NgModule({
@@ -49,9 +53,11 @@ import {MatSortModule} from '@angular/material/sort';
     MatIconModule,
     MatSidenavModule,
     MatListModule,
-    MatSortModule
+    MatSortModule,
+    MatDividerModule,
+    ChartsModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

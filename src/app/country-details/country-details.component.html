@@ -1,5 +1,11 @@
 <div layout="row" class="container">
 
+  <button mat-raised-button style="text-align: center; justify-content: center" color="accent"
+          [routerLink]="['/countries']">
+    <mat-icon aria-hidden="false" aria-label="Back">arrow_back_ios</mat-icon>
+    Back to countries
+  </button>
+
   <mat-form-field>
     <mat-label>Filter</mat-label>
     <input matInput [disabled]="isError || isLoading" (keyup)="applyFilter($event)" placeholder="Ex. 10">
@@ -13,7 +19,7 @@
 
       <!-- Cases Column -->
       <ng-container matColumnDef="cases">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Cases </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Cases</mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.cases}} </mat-cell>
       </ng-container>
 
@@ -64,6 +70,59 @@
     </mat-table>
 
     <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+  </div>
+
+  <!-- Devider -->
+  <mat-divider></mat-divider>
+
+  <!-- Bar Chart -->
+  <div class="mat-elevation-z0 my-chart">
+    <div>
+      <div>
+        <section class="mat-typography">
+          <h1>Latest Updates</h1>
+        </section>
+        <div style="display: block">
+          <canvas baseChart
+                  [datasets]="barChartData"
+                  [labels]="barChartLabels"
+                  [options]="barChartOptions"
+                  [plugins]="barChartPlugins"
+                  [legend]="barChartLegend"
+                  [chartType]="barChartType"
+                  [colors]="barChartColors">
+          </canvas>
+          <button style="margin-top: 15px;" mat-raised-button style="text-align: center; justify-content: center" color="primary"
+                  (click)="changeStyle()">
+            <mat-icon aria-hidden="false" aria-label="Back">update</mat-icon> Change View
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Devider -->
+  <mat-divider style="margin-top: 25px; margin-bottom: 25px;"></mat-divider>
+
+  <!-- Bar Chart -->
+  <div class="mat-elevation-z0 my-chart">
+    <div>
+      <div>
+        <section class="mat-typography">
+        </section>
+        <div style="display: block">
+          <canvas baseChart
+                  [data]="pieChartData"
+                  [labels]="pieChartLabels"
+                  [chartType]="pieChartType"
+                  [options]="pieChartOptions"
+                  [plugins]="pieChartPlugins"
+                  [colors]="pieChartColors"
+                  [legend]="pieChartLegend">
+          </canvas>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>
