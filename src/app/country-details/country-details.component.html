@@ -1,10 +1,18 @@
 <div layout="row" class="container">
 
   <button mat-raised-button style="text-align: center; justify-content: center" color="accent"
-          [routerLink]="['/countries']">
+    [routerLink]="['/countries']">
     <mat-icon aria-hidden="false" aria-label="Back">arrow_back_ios</mat-icon>
     Back to countries
   </button>
+
+  <!-- Country Name -->
+  <mat-grid-list cols="1" rowHeight="20px">
+    <mat-grid-tile>
+      <img height="20" width="30" src="{{country?.flag}}" alt="{{country?.flag}}" style="margin-right: 10px" />
+      <mat-label style="text-align: center; justify-content: center">{{ country?.name }}</mat-label>
+    </mat-grid-tile>
+  </mat-grid-list>
 
   <mat-form-field>
     <mat-label>Filter</mat-label>
@@ -62,7 +70,7 @@
       <!-- Timestamp Column -->
       <ng-container matColumnDef="timestamp">
         <mat-header-cell mat-sort-header *matHeaderCellDef> Timestamp</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.timestamp | date:'short'}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.timestamp}} </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -75,6 +83,55 @@
   <!-- Devider -->
   <mat-divider></mat-divider>
 
+  <!-- Range date -->
+  <mat-grid-list cols="4" rowHeight="75px">
+    <mat-grid-tile colspan="4">
+      <mat-label>Filter with range</mat-label>
+    </mat-grid-tile>
+    <mat-grid-tile></mat-grid-tile>
+    <form (ngSubmit)="onDateRangeUpdate()" [formGroup]="dateForm">
+      <mat-grid-tile>
+        <mat-form-field style="text-align: center; justify-content: center;">
+          <mat-label>Start Date</mat-label>
+          <input matInput formControlName="startPicker" [matDatepicker]="startPicker">
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+          <!-- Field Errors -->
+          <mat-error *ngIf="dateForm.controls.startPicker.touched && dateForm.controls.startPicker.invalid && dateForm.controls.startPicker.errors.required">
+            Start date is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field style="text-align: center; justify-content: center;">
+          <mat-label>End Date</mat-label>
+          <input matInput formControlName="endPicker" [matDatepicker]="endPicker">
+          <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+          <mat-datepicker #endPicker></mat-datepicker>
+          <!-- Field Errors -->
+          <mat-error *ngIf="dateForm.controls.endPicker.touched && dateForm.controls.endPicker.invalid && dateForm.controls.endPicker.errors.required">
+            End date is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="4" *ngIf="dateForm.controls.startPicker.touched && dateForm.controls.endPicker.touched && dateForm.invalid && dateForm.errors?.invalidDateRange">
+        <mat-error>
+          <strong>* Invalid range</strong>
+        </mat-error>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="4">
+        <button style="margin-top: 15px;" mat-raised-button style="text-align: center; justify-content: center"
+          color="accent" type="submit" [disabled]="dateForm.invalid">
+          <mat-icon aria-hidden="false" aria-label="Back">autorenew</mat-icon> Update Date Range
+        </button>
+      </mat-grid-tile>
+    </form>
+  </mat-grid-list>
+
+
+  <!-- Devider -->
+  <mat-divider></mat-divider>
+
   <!-- Bar Chart -->
   <div class="mat-elevation-z0 my-chart">
     <div>
@@ -83,17 +140,12 @@
           <h1>Latest Updates</h1>
         </section>
         <div style="display: block">
-          <canvas baseChart
-                  [datasets]="barChartData"
-                  [labels]="barChartLabels"
-                  [options]="barChartOptions"
-                  [plugins]="barChartPlugins"
-                  [legend]="barChartLegend"
-                  [chartType]="barChartType"
-                  [colors]="barChartColors">
+          <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+            [plugins]="lineChartPlugins" [legend]="lineChartLegend" [chartType]="lineChartType"
+            [colors]="lineChartColors">
           </canvas>
-          <button style="margin-top: 15px;" mat-raised-button style="text-align: center; justify-content: center" color="primary"
-                  (click)="changeStyle()">
+          <button style="margin-top: 15px;" mat-raised-button style="text-align: center; justify-content: center"
+            color="primary" (click)="changeStyle()">
             <mat-icon aria-hidden="false" aria-label="Back">update</mat-icon> Change View
           </button>
         </div>
@@ -111,14 +163,8 @@
         <section class="mat-typography">
         </section>
         <div style="display: block">
-          <canvas baseChart
-                  [data]="pieChartData"
-                  [labels]="pieChartLabels"
-                  [chartType]="pieChartType"
-                  [options]="pieChartOptions"
-                  [plugins]="pieChartPlugins"
-                  [colors]="pieChartColors"
-                  [legend]="pieChartLegend">
+          <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+            [options]="pieChartOptions" [plugins]="pieChartPlugins" [colors]="pieChartColors" [legend]="pieChartLegend">
           </canvas>
         </div>
       </div>

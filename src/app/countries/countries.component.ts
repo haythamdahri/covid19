@@ -1,11 +1,9 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {StatisticsService} from '../shared/statistics.service';
-import StatisticsModel from '../models/statistics.model';
 import {Subscription} from 'rxjs';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {Title} from '@angular/platform-browser';
-import {getName, getCodes} from 'country-list';
 import {CountriesService} from '../shared/countries.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatSort} from '@angular/material/sort';

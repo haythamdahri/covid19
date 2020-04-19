@@ -6,5 +6,5 @@ export default class StatisticsModel {
   public recovered: number;
   public active: number;
   public critical: number;
-  public timestamp: Date;
+  public timestamp: string;
 }

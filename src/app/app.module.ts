@@ -24,10 +24,13 @@ import {MatListModule} from '@angular/material/list';
 import {MatSortModule} from '@angular/material/sort';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { ChartsModule } from 'ng2-charts';
 import {DatePipe} from '@angular/common';
 import { AboutAuthorComponent } from './about-author/about-author.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -59,7 +62,10 @@ import { AboutAuthorComponent } from './about-author/about-author.component';
     MatSortModule,
     MatDividerModule,
     MatBottomSheetModule,
-    ChartsModule
+    MatDatepickerModule,
+    MatNativeDateModule, 
+    ChartsModule,
+    ReactiveFormsModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
