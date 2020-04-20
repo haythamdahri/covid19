@@ -8,6 +8,7 @@ import { CountriesService } from "../shared/countries.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatSort } from "@angular/material/sort";
 import { ActivatedRoute, Params, Router } from "@angular/router";
+import { TrafficService } from '../shared/traffic.service';
 
 @Component({
   selector: "app-home",
@@ -41,10 +42,13 @@ export class CountriesComponent implements OnInit, OnDestroy {
     private titleService: Title,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private trafficService: TrafficService
   ) {}
 
   ngOnInit(): void {
+    // Increment views
+    this.trafficService.incrementViews();
     // Set component title
     this.titleService.setTitle(`COVID19 - Countries`);
     // Subscribe to route

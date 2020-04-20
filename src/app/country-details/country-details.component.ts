@@ -21,6 +21,7 @@ import { getName } from "country-list";
 import { CountriesService } from "../shared/countries.service";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { checkDateDifference, compareDate } from "../shared/global.functions";
+import { TrafficService } from '../shared/traffic.service';
 
 @Component({
   selector: "app-country-details",
@@ -156,10 +157,13 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private titleService: Title,
     private snackBar: MatSnackBar,
-    private countriesService: CountriesService
+    private countriesService: CountriesService,
+    private trafficService: TrafficService
   ) {}
 
   ngOnInit(): void {
+    // Increment views
+    this.trafficService.incrementViews();
     // Set component title
     this.titleService.setTitle("COVID19");
     // Date form

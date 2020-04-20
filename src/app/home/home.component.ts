@@ -7,6 +7,7 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import CountryDataModel from '../models/country-data.model';
+import { TrafficService } from '../shared/traffic.service';
 
 @Component({
   selector: 'app-home',
@@ -32,10 +33,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   countriesData: CountryDataModel[] = [];
   countriesList: CountryDataModel[] = [];
 
-  constructor(private titleService: Title, private countriesDataService: CountriesDataService, private snackBar: MatSnackBar) {
+  constructor(private titleService: Title, private countriesDataService: CountriesDataService, private snackBar: MatSnackBar,
+              private trafficService: TrafficService) {
   }
 
   ngOnInit(): void {
+    // Increment views
+    this.trafficService.incrementViews();
     // Set page title
     this.titleService.setTitle('COVID19 - Home');
     // Retrieve countries data

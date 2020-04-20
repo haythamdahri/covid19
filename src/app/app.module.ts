@@ -25,13 +25,15 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-
 import { ChartsModule } from 'ng2-charts';
 import {DatePipe} from '@angular/common';
 import { AboutAuthorComponent } from './about-author/about-author.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { environment } from 'src/environments/environment.prod';
 
 @NgModule({
   declarations: [
@@ -63,9 +65,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatDividerModule,
     MatBottomSheetModule,
     MatDatepickerModule,
-    MatNativeDateModule, 
+    MatNativeDateModule,
     ChartsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

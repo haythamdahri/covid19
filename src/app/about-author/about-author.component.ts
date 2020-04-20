@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TrafficService } from '../shared/traffic.service';
 
 @Component({
   selector: 'app-about-author',
@@ -9,9 +10,11 @@ export class AboutAuthorComponent implements OnInit {
 
   now = new Date();
 
-  constructor() { }
+  constructor(private trafficService: TrafficService) { }
 
   ngOnInit(): void {
+    // Increment views
+    this.trafficService.incrementViews();
   }
 
 }

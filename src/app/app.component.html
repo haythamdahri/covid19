@@ -16,6 +16,10 @@
           Countries
         </a>
         <span flex class="fill-space"></span>
+        <a mat-button>
+          <mat-icon aria-hidden="false" aria-label="About author">remove_red_eye</mat-icon> {{ (traffic | async)?.views || '...' }}
+        </a>
+        <span flex class="fill-space"></span>
         <a mat-button (click)="openBottomSheet()">
           <mat-icon aria-hidden="false" aria-label="About author">account_box</mat-icon> Author
         </a>

@@ -26,7 +26,6 @@ export class CountriesDataService {
           row.region = ((row.country == 'North America' || row.country == 'South America') ? 'Americas' : row.country);
           return row;
         });
-        console.log(data);
         // Return data
         return data;
       })
