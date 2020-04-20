@@ -17,11 +17,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 // MatPaginator Inputs
   pagedList: CountryDataModel[] = [];
-  breakpoint: number = 3;  //to adjust to screen
+  breakpoint: number = 6;  //to adjust to screen
   // MatPaginator Inputs
   length: number = 0;
-  pageSize: number = 3;  //displaying three cards each row
-  pageSizeOptions: number[] = [3, 6, 9, 12];
+  pageSize: number = 6;  //displaying three cards each row
+  pageSizeOptions: number[] = [6, 12, 18, 24];
 
   // MatPaginator Output
   pageEvent: PageEvent;
@@ -39,11 +39,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     // Set page title
     this.titleService.setTitle('COVID19 - Home');
     // Retrieve countries data
-    this.countriesDataSubscription = this.countriesDataService.getCountriesData().subscribe(
+    this.countriesDataSubscription = this.countriesDataService.getRegionsData().subscribe(
       (countriesData) => {
         this.countriesData = countriesData;
         this.countriesList = countriesData;
-        this.pagedList = this.countriesList.slice(0, 3);
+        this.pagedList = this.countriesList.slice(0, 6);
         this.length = this.countriesList.length;
       },
       (error) => {
@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   applyFilter($event: KeyboardEvent) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.pagedList = this.countriesList.filter(countryData =>
-      countryData.country.toLocaleLowerCase().indexOf(filterValue.toLowerCase()) !== -1).slice(0, 3);
+      countryData.country.toLocaleLowerCase().indexOf(filterValue.toLowerCase()) !== -1).slice(0, 6);
   }
 
   onPageChange(event: PageEvent) {

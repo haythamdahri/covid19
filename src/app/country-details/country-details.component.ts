@@ -225,7 +225,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
               this.dataSource.sort = this.sort;
             }
             // Push data into chart from first day until now
-            data.snapshots
+            data.snapshots.reverse()
               .forEach((row) => {
                 // Number of cases
                 this.lineChartData[0]["data"].push(row.cases);

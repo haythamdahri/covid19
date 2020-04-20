@@ -2,22 +2,27 @@
 
   <mat-form-field>
     <mat-label>Filter</mat-label>
-    <input matInput [disabled]="isError || isLoading" (keyup)="applyFilter($event)" placeholder="Ex. Morocco">
+    <input matInput [disabled]="isError || isLoading" (keyup)="applyFilter($event)" placeholder="Ex. Africa">
   </mat-form-field>
 
   <!-- Loading progressbarwhile fetching data from server -->
   <mat-progress-bar *ngIf="isLoading && !isError" mode="indeterminate"></mat-progress-bar>
 
-  <mat-grid-list cols="1" rowHeight="300px" flex fxLayout="row">
+  <mat-grid-list cols="2" rowHeight="300px" flex fxLayout="row">
     <mat-grid-tile *ngFor="let country of pagedList">
       <mat-card  class="example-card" style="width: 90%; justify-content: center">
-        <mat-card-header>
+        <mat-card-header style="width: 100%;">
           <div mat-card-avatar>
-            <img src="assets/all_countries.png" height="40" width="40" style="border-radius: 100%" />
+            <img src="assets/regions.png" height="40" width="40" style="border-radius: 100%" />
           </div>
           <mat-card-title>
-            <strong>Country: </strong> {{ country.country }}</mat-card-title>
-          <mat-card-subtitle><strong>Cases: </strong> {{ country.cases }}</mat-card-subtitle>
+            <strong style="color: #6b50b6;">Region: </strong> {{ country.country }}
+            <strong style="float: right;">
+              <a mat-raised-button color="primary" class="mat-elevation-z4" [routerLink]="['/countries']" [queryParams]="{region: country.region}">
+                <mat-icon>near_me</mat-icon> Check region countries</a>
+            </strong>
+          </mat-card-title>
+          <mat-card-subtitle><strong style="color: #6b50b6; ">Cases: </strong> {{ country.cases }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content class="app-mat-content">
           <mat-grid-list cols="2" rowHeight="25px">

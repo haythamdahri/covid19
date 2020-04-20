@@ -9,4 +9,8 @@ table {
 .container {
   padding : 20px;
 }
+.mat-row:hover {
+  background-color: beige;
+  cursor: pointer;
+}
 

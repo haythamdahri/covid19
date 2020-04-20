@@ -1,5 +1,20 @@
 <div layout="row" class="container">
 
+  <button mat-raised-button style="text-align: center; justify-content: center" color="accent"
+    [routerLink]="['/']">
+    <mat-icon aria-hidden="false" aria-label="Back">arrow_back_ios</mat-icon>
+    Back to regions
+  </button>
+
+  <!-- Country Name -->
+  <mat-grid-list cols="1" rowHeight="20px" *ngIf="regionName != null">
+    <mat-grid-tile>
+      <img height="30" width="30" src="assets/regions.png" alt="REGION" style="margin-right: 10px" />
+      <mat-label style="text-align: center; justify-content: center"><strong style="font-weight: bold; color: #6b50b6;">Region: </strong>{{ regionName }}</mat-label>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+
   <mat-form-field>
     <mat-label>Filter</mat-label>
     <input matInput [disabled]="isError || isLoading" (keyup)="applyFilter($event)" placeholder="Ex. Morocco">
@@ -57,7 +72,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getCountryDetails(row.alpha2Code)"></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>

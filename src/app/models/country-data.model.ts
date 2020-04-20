@@ -9,4 +9,5 @@ export default class CountryDataModel {
   public critical: number;
   public casesPerOneMillion: number;
   public flag: string;
+  public region: string;
 }

@@ -17,4 +17,19 @@ export class CountriesDataService {
   getCountriesData() {
     return this.http.get<CountryDataModel[]>(CountriesDataService.API, {responseType: 'json'});
   }
+
+  getRegionsData() {
+    return this.http.get<CountryDataModel[]>(CountriesDataService.API, {responseType: 'json'}).pipe(
+      map((response) => {
+        let data = response.slice(0, 6);
+        data = data.map((row) => {
+          row.region = ((row.country == 'North America' || row.country == 'South America') ? 'Americas' : row.country);
+          return row;
+        });
+        console.log(data);
+        // Return data
+        return data;
+      })
+    );
+  }
 }

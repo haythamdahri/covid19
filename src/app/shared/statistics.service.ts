@@ -31,7 +31,7 @@ export class StatisticsService {
           data.snapshots.forEach((snapshot) => {
             const timestampDate1 = new Date(snapshot.timestamp);
             const timestampDate2 = new Date(snapshot.timestamp);
-            // Add 24 hours to include end date 
+            // Subtract 24 hours to include end date 
             timestampDate2.setUTCHours(timestampDate2.getUTCHours() - 24);
             if( compareDate(timestampDate1, startDate) >= 0 && compareDate(timestampDate2, endDate) <= 0 ) {
               snapshots = [...snapshots, snapshot];
@@ -48,7 +48,7 @@ export class StatisticsService {
           } 
         });
         // Reverse array to start from first first date
-        data.snapshots = snapshots.slice();
+        data.snapshots = snapshots.slice().reverse();
         return data;
       }),
       retry(5)

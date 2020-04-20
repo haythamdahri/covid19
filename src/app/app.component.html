@@ -7,14 +7,18 @@
         </button>
         <h1><a style="color: white; border: none" [routerLink]="'/'">COVID19 Dashboard</a></h1>
         <span class="menu-spacer"></span>
-        <div>
-          <a mat-button [routerLink]="'/'">
-            <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
-            Home</a>
-          <a mat-button [routerLink]="'/countries'">
-            <mat-icon aria-hidden="false" aria-label="Example home icon">list</mat-icon>
-            Countries</a>
-        </div>
+        <a mat-button [routerLink]="'/'">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
+          Home
+        </a>
+        <a mat-button [routerLink]="'/countries'">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">list</mat-icon>
+          Countries
+        </a>
+        <span flex class="fill-space"></span>
+        <a mat-button (click)="openBottomSheet()">
+          <mat-icon aria-hidden="false" aria-label="About author">account_box</mat-icon> Author
+        </a>
       </mat-toolbar-row>
     </mat-toolbar>
 
@@ -23,20 +27,24 @@
         <mat-nav-list>
           <a mat-list-item (click)="sidenav.toggle()" [routerLink]="'/'">
             <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
-            Home</a>
+            Home
+          </a>
           <a mat-list-item (click)="sidenav.toggle()" [routerLink]="'/countries'">
             <mat-icon aria-hidden="false" aria-label="Example home icon">list</mat-icon>
-            Countries</a>
+            Countries
+          </a>
           <a mat-list-item (click)="sidenav.toggle()" mat-list-item>
             <mat-icon aria-hidden="false" aria-label="Example home icon">close</mat-icon>
-            Close</a>
+            Close
+          </a>
 
           <!-- Devider -->
           <mat-divider style="margin-top: 25px; margin-bottom: 25px;"></mat-divider>
 
           <a mat-list-item (click)="openBottomSheet()">
             <mat-icon aria-hidden="false" aria-label="About author">account_box</mat-icon>
-            Author</a>
+            Author
+          </a>
         </mat-nav-list>
       </mat-sidenav>
       <mat-sidenav-content>
