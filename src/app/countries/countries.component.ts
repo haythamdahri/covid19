@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { StatisticsService } from "../shared/statistics.service";
 import { Subscription } from "rxjs";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";

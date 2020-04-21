@@ -74,7 +74,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
         anchor: "end",
         align: "end",
       },
-    },
+    }
   };
   public lineChartLabels: Label[] = [];
   public lineChartType: ChartType = "line";
@@ -82,14 +82,38 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
   public lineChartLegend = true;
   public lineChartPlugins = [pluginDataLabels];
   public lineChartColors: Color[] = [
+    { // Cases
+      backgroundColor: 'rgba(148,159,177,0.5)',
+      borderColor: 'rgba(148,159,177,1)',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    },
+    { // Recovered
+      backgroundColor: 'rgb(51, 185, 7, 0.5)',
+      borderColor: 'rgb(51, 185, 7)',
+      pointBackgroundColor: 'rgb(51, 185, 2)',
+      pointBorderColor: 'rgb(51, 185, 7)',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(77,83,96,1)'
+    },
+    { // Deaths
+      backgroundColor: 'rgb(216, 162, 7, 0.5)',
+      borderColor: 'rgb(216, 162, 7)',
+      pointBackgroundColor: 'rgb(216, 162, 2)',
+      pointBorderColor: 'rgb(216, 162, 7)',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(77,83,96,1)'
+    },
     {
-      // dark grey
-      backgroundColor: "rgba(148,159,177,0.2)",
-      borderColor: "rgba(148,159,177,1)",
-      pointBackgroundColor: "rgba(148,159,177,1)",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
-      pointHoverBorderColor: "rgba(148,159,177,0.8)",
+      // Critical
+      backgroundColor: "rgb(255, 62, 62, 0.5)",
+      borderColor: "rgb(255, 62, 62)",
+      pointBackgroundColor: "rgb(255, 62, 55)",
+      pointBorderColor: "rgb(255, 62, 62)",
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: "rgba(77,83,96,1)",
     },
   ];
 
@@ -112,7 +136,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
     {
       data: [],
       label: "Critical cases",
-      fill: false,
+      fill: false
     },
   ];
 
@@ -229,7 +253,8 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
               this.dataSource.sort = this.sort;
             }
             // Push data into chart from first day until now
-            data.snapshots.reverse()
+            const reversedData = [...data.snapshots];
+            reversedData.reverse()
               .forEach((row) => {
                 // Number of cases
                 this.lineChartData[0]["data"].push(row.cases);
@@ -244,10 +269,10 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
             // Pie chart data
             if( data.snapshots != null && data.snapshots.length > 0 ) {
               this.pieChartData = [
-                data.snapshots.reverse()[0].cases,
-                data.snapshots.reverse()[0].recovered,
-                data.snapshots.reverse()[0].deaths,
-                data.snapshots.reverse()[0].critical,
+                data.snapshots[0].cases,
+                data.snapshots[0].recovered,
+                data.snapshots[0].deaths,
+                data.snapshots[0].critical,
               ];
             }
           } else {
