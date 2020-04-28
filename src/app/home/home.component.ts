@@ -1,13 +1,13 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {Subscription} from 'rxjs';
 import {CountriesDataService} from '../shared/countries-data.service';
-import StatisticsModel from '../models/statistics.model';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
+import {PageEvent} from '@angular/material/paginator';
+import { getCode, getName } from 'country-list';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import CountryDataModel from '../models/country-data.model';
 import { TrafficService } from '../shared/traffic.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -33,8 +33,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   countriesData: CountryDataModel[] = [];
   countriesList: CountryDataModel[] = [];
 
-  constructor(private titleService: Title, private countriesDataService: CountriesDataService, private snackBar: MatSnackBar,
-              private trafficService: TrafficService) {
+  constructor(private titleService: Title, public countriesDataService: CountriesDataService, private snackBar: MatSnackBar,
+              private trafficService: TrafficService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -83,6 +83,25 @@ export class HomeComponent implements OnInit, OnDestroy {
       endIndex = this.length;
     }
     this.pagedList = this.countriesList.slice(startIndex, endIndex);
+  }
+
+  onGetCountryDetails(countryName: string) {
+    // Check code if not in excluded countries
+    if( countryName === 'USA' ) {
+      // Redirect to countries with code
+      this.router.navigate(['/countries', 'US']);
+    } else if( countryName === 'World' ) {
+      // Redirect to countries with code
+      this.router.navigate(['/countries']);
+    } else {
+      const code = getCode(countryName);
+      if( code === null ) {
+        this.router.navigate(['/countries']);
+      } else {
+        // Redirect to countries with code
+        this.router.navigate(['/countries', code]);
+      }
+    }
   }
 
 }

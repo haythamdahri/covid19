@@ -21,7 +21,7 @@ import { getName } from "country-list";
 import { CountriesService } from "../shared/countries.service";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { checkDateDifference, compareDate } from "../shared/global.functions";
-import { TrafficService } from '../shared/traffic.service';
+import { TrafficService } from "../shared/traffic.service";
 
 @Component({
   selector: "app-country-details",
@@ -56,11 +56,13 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
     scales: {
-      xAxes: [{
-        ticks: {
-          beginAtZero: false,
+      xAxes: [
+        {
+          ticks: {
+            beginAtZero: false,
+          },
         },
-      }],
+      ],
       yAxes: [
         {
           ticks: {
@@ -74,7 +76,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
         anchor: "end",
         align: "end",
       },
-    }
+    },
   };
   public lineChartLabels: Label[] = [];
   public lineChartType: ChartType = "line";
@@ -82,29 +84,32 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
   public lineChartLegend = true;
   public lineChartPlugins = [pluginDataLabels];
   public lineChartColors: Color[] = [
-    { // Cases
-      backgroundColor: 'rgba(148,159,177,0.5)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    {
+      // Cases
+      backgroundColor: "rgba(148,159,177,0.5)",
+      borderColor: "rgba(148,159,177,1)",
+      pointBackgroundColor: "rgba(148,159,177,1)",
+      pointBorderColor: "#fff",
+      pointHoverBackgroundColor: "#fff",
+      pointHoverBorderColor: "rgba(148,159,177,0.8)",
     },
-    { // Recovered
-      backgroundColor: 'rgb(51, 185, 7, 0.5)',
-      borderColor: 'rgb(51, 185, 7)',
-      pointBackgroundColor: 'rgb(51, 185, 2)',
-      pointBorderColor: 'rgb(51, 185, 7)',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
+    {
+      // Recovered
+      backgroundColor: "rgb(51, 185, 7, 0.5)",
+      borderColor: "rgb(51, 185, 7)",
+      pointBackgroundColor: "rgb(51, 185, 2)",
+      pointBorderColor: "rgb(51, 185, 7)",
+      pointHoverBackgroundColor: "#fff",
+      pointHoverBorderColor: "rgba(77,83,96,1)",
     },
-    { // Deaths
-      backgroundColor: 'rgb(216, 162, 7, 0.5)',
-      borderColor: 'rgb(216, 162, 7)',
-      pointBackgroundColor: 'rgb(216, 162, 2)',
-      pointBorderColor: 'rgb(216, 162, 7)',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
+    {
+      // Deaths
+      backgroundColor: "rgb(216, 162, 7, 0.5)",
+      borderColor: "rgb(216, 162, 7)",
+      pointBackgroundColor: "rgb(216, 162, 2)",
+      pointBorderColor: "rgb(216, 162, 7)",
+      pointHoverBackgroundColor: "#fff",
+      pointHoverBorderColor: "rgba(77,83,96,1)",
     },
     {
       // Critical
@@ -112,7 +117,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
       borderColor: "rgb(255, 62, 62)",
       pointBackgroundColor: "rgb(255, 62, 55)",
       pointBorderColor: "rgb(255, 62, 62)",
-      pointHoverBackgroundColor: '#fff',
+      pointHoverBackgroundColor: "#fff",
       pointHoverBorderColor: "rgba(77,83,96,1)",
     },
   ];
@@ -136,7 +141,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
     {
       data: [],
       label: "Critical cases",
-      fill: false
+      fill: false,
     },
   ];
 
@@ -223,12 +228,19 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
   }
 
   fetchCountryData(alpha2Code: string) {
-    this.countriesService
+    this.statisticsSubscription = this.countriesService
       .getCountry(alpha2Code)
-      .toPromise()
-      .then((countries) => {
-        this.country = countries[0];
-      });
+      .subscribe(
+        (countries) => {
+          this.country = countries[0];
+        },
+        (err) => {
+          this.isError = true;
+          this.snackBar.open("No country found", "Undo", {
+            duration: 2000,
+          });
+        }
+      );
   }
 
   fetchData(countryCode: string, startDate: Date = null, endDate: Date = null) {
@@ -254,20 +266,19 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
             }
             // Push data into chart from first day until now
             const reversedData = [...data.snapshots];
-            reversedData.reverse()
-              .forEach((row) => {
-                // Number of cases
-                this.lineChartData[0]["data"].push(row.cases);
-                // Recovered people
-                this.lineChartData[1]["data"].push(row.recovered);
-                // Number of deaths
-                this.lineChartData[2]["data"].push(row.deaths);
-                // Critical cases
-                this.lineChartData[3]["data"].push(row.critical);
-                this.lineChartLabels = [...this.lineChartLabels, row.timestamp];
-              });
+            reversedData.reverse().forEach((row) => {
+              // Number of cases
+              this.lineChartData[0]["data"].push(row.cases);
+              // Recovered people
+              this.lineChartData[1]["data"].push(row.recovered);
+              // Number of deaths
+              this.lineChartData[2]["data"].push(row.deaths);
+              // Critical cases
+              this.lineChartData[3]["data"].push(row.critical);
+              this.lineChartLabels = [...this.lineChartLabels, row.timestamp];
+            });
             // Pie chart data
-            if( data.snapshots != null && data.snapshots.length > 0 ) {
+            if (data.snapshots != null && data.snapshots.length > 0) {
               this.pieChartData = [
                 data.snapshots[0].cases,
                 data.snapshots[0].recovered,
